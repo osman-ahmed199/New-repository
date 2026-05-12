@@ -14,6 +14,7 @@ export default function UserManagement() {
   const [message, setMessage] = useState('');
 
   const token = localStorage.getItem('token');
+  const API_BASE_URL = '/_/backend'; // Base URL للـ API مع experimental services
 
   // جلب كل المستخدمين
   const fetchUsers = async () => {
@@ -24,7 +25,7 @@ export default function UserManagement() {
       console.log('🔄 جلب المستخدمين...');
       console.log('Token:', token ? 'موجود' : 'غير موجود');
       
-      const res = await fetch('http://localhost:3000/api/admin/users', {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -69,7 +70,7 @@ export default function UserManagement() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/admin/users', {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -98,7 +99,7 @@ export default function UserManagement() {
     if (!confirm(`هل أنت متأكد من حذف المستخدم "${username}"؟`)) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/admin/users/${username}`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users/${username}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -124,7 +125,7 @@ export default function UserManagement() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/admin/users/${username}/password`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users/${username}/password`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,

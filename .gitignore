@@ -3,3 +3,5 @@ backend/helpdesk.db
 .env 
 .env 
 frontend/node_modules 
+.vercel
+.env*.local

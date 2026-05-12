@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const token = localStorage.getItem('token');
+  const API_BASE_URL = '/_/backend'; // Base URL للـ API مع experimental services
 
   useEffect(() => {
     if (activeTab === 'dashboard') fetchStats();
@@ -24,7 +25,7 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/admin/dashboard', {
+      const res = await fetch(`${API_BASE_URL}/api/admin/dashboard`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -41,8 +42,8 @@ export default function AdminDashboard() {
       if (searchQuery) params.append('search', searchQuery);
       
       const url = params.toString() 
-        ? `http://localhost:3000/api/admin/tickets?${params.toString()}`
-        : 'http://localhost:3000/api/admin/tickets';
+        ? `${API_BASE_URL}/api/admin/tickets?${params.toString()}`
+        : `${API_BASE_URL}/api/admin/tickets`;
       
       const res = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -56,7 +57,7 @@ export default function AdminDashboard() {
 
   const fetchTicketDetails = async (ticketId) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/tickets/${ticketId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/tickets/${ticketId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -68,7 +69,7 @@ export default function AdminDashboard() {
 
   const updateTicketStatus = async (ticketId, status) => {
     try {
-      await fetch(`http://localhost:3000/api/admin/tickets/${ticketId}/status`, {
+      await fetch(`${API_BASE_URL}/api/admin/tickets/${ticketId}/status`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -76,13 +77,9 @@ export default function AdminDashboard() {
         },
         body: JSON.stringify({ status })
       });
-      
-      // Update selected ticket
       if (selectedTicket && selectedTicket.id === ticketId) {
         setSelectedTicket({ ...selectedTicket, status });
       }
-      
-      // Refresh tickets list
       fetchTickets();
     } catch (err) {
       console.error('Update status error:', err);
@@ -91,9 +88,8 @@ export default function AdminDashboard() {
 
   const sendReply = async (ticketId) => {
     if (!replyMessage.trim()) return;
-    
     try {
-      await fetch(`http://localhost:3000/api/admin/tickets/${ticketId}/reply`, {
+      await fetch(`${API_BASE_URL}/api/admin/tickets/${ticketId}/reply`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -101,9 +97,7 @@ export default function AdminDashboard() {
         },
         body: JSON.stringify({ message: replyMessage })
       });
-      
       setReplyMessage('');
-      // Refresh ticket details and tickets list
       fetchTicketDetails(ticketId);
       fetchTickets();
     } catch (err) {
