@@ -1,3 +1,5 @@
 node_modules 
 backend/helpdesk.db 
 .env 
+.env 
+frontend/node_modules 
