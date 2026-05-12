@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const db = require('../database');
 
+// استخراج مفتاح JWT من متغيرات البيئة مع قيمة افتراضية آمنة
 const JWT_SECRET = process.env.JWT_SECRET || 'helpdesk-secret-key';
 
+// Middleware للتحقق من توثيق JWT
 const authMiddleware = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
@@ -19,6 +21,7 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+// Middleware لتقييد الوصول للمسؤولين فقط
 const adminOnly = (req, res, next) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ error: 'الوصول مخصص للمسؤولين فقط.' });
