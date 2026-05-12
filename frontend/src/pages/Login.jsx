@@ -27,9 +27,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
+        <div className="text-center">
+          {/* Support Icon SVG */}
+          <div className="mx-auto h-16 w-16 flex items-center justify-center bg-blue-600 rounded-full mb-4">
+            <svg className="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             نظام الدعم الفني
           </h2>
@@ -88,18 +94,7 @@ const Login = () => {
             </button>
           </div>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              حسابات تجريبية:
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              مسؤول: admin / admin123
-            </p>
-            <p className="text-xs text-gray-500">
-              موظف: employee1 / emp123
-            </p>
-          </div>
-        </form>
+                  </form>
       </div>
     </div>
   );
